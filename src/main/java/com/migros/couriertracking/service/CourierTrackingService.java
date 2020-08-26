@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,5 +27,13 @@ public class CourierTrackingService {
         courierLocation.setLat(courierLocationDto.getLat());
         courierLocation.setTimestamp(courierLocationDto.getTimestamp());
         courierTrackingRepository.save(courierLocation);
+    }
+
+    public List<CourierLocation> getTracks() throws Exception {
+        List<CourierLocation> courierLocations = courierTrackingRepository.findAll();
+        if (CollectionUtils.isEmpty(courierLocations)) {
+            throw new Exception("No Track Found!");
+        }
+        return courierLocations;
     }
 }

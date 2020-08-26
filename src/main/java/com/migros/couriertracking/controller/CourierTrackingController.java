@@ -1,6 +1,7 @@
 package com.migros.couriertracking.controller;
 
 
+import com.migros.couriertracking.mapper.CourierLocationMapper;
 import com.migros.couriertracking.model.data.CourierLocationDto;
 import com.migros.couriertracking.service.CourierTrackingService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("api/v1")
@@ -32,6 +36,15 @@ public class CourierTrackingController {
         log.info("Receive Tracking:{}", courierLocationDto);
         courierTrackingService.track(courierLocationDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/tracks")
+    @ApiOperation(value = "All Recorded Tracks")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponse(code = 200, message = "Tracks Listed")
+    public List<CourierLocationDto> getTracks() throws Exception {
+        return CourierLocationMapper.INSTANCE.courierLocationMapDtos(courierTrackingService.getTracks());
+
     }
 
 }
