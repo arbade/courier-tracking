@@ -25,7 +25,10 @@ import java.util.List;
 public class CourierTrackingController {
 
     @Autowired
-    CourierTrackingService courierTrackingService; // service
+    private CourierTrackingService courierTrackingService; // service
+
+    @Autowired
+    private CourierLocationMapper courierLocationMapper;
 
 
     @PostMapping("/receiveLocation")
@@ -43,7 +46,7 @@ public class CourierTrackingController {
     @ResponseStatus(HttpStatus.OK)
     @ApiResponse(code = 200, message = "Tracks Listed")
     public List<CourierLocationDto> getTracks() throws Exception {
-        return CourierLocationMapper.INSTANCE.courierLocationMapDtos(courierTrackingService.getTracks());
+        return courierLocationMapper.courierLocationMapDtos(courierTrackingService.getTracks());
 
     }
 

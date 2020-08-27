@@ -1,23 +1,29 @@
 package com.migros.couriertracking.util;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.migros.couriertracking.model.data.CourierInfo;
+import com.migros.couriertracking.model.data.StoreInfo;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+
+import java.io.IOException;
 
 public class JsonUtil {
 
-    public static String parser(String jsonPath) throws IOException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        TypeFactory typeFactory = objectMapper.getTypeFactory();
-//        MyPOJO[] couriorJsonObj = objectMapper.readValue(new File(jsonPath), CourierInfo.class);
-//        return
-
-        return null;
-
+    public static List<StoreInfo> getStoreInfoList(String storeJsonContent) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            TypeFactory typeFactory = objectMapper.getTypeFactory();
+            CollectionType collectionType = typeFactory.constructCollectionType(List.class, StoreInfo.class);
+            return objectMapper.readValue(storeJsonContent, collectionType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
     }
+
+
 }

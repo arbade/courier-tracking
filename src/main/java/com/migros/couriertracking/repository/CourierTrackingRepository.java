@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface CourierTrackingRepository extends JpaRepository<CourierLocation, Long> {
 
-    List<CourierLocation> findAllByCourierId(Long courierId);
+    List<CourierLocation> findAllByCourierIdOrderByTimestamp(Long courierId);
 }

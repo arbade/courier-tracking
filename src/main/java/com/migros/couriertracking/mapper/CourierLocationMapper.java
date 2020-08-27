@@ -8,10 +8,8 @@ import org.mapstruct.factory.Mappers;
 import java.util.Collection;
 import java.util.List;
 
-@Mapper
+@Mapper(config = MapperConfig.class)
 public interface CourierLocationMapper {
-
-    CourierLocationMapper INSTANCE = Mappers.getMapper(CourierLocationMapper.class);
 
     CourierLocation map(CourierLocationDto courierLocationDto);
 
