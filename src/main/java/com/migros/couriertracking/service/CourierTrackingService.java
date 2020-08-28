@@ -29,8 +29,8 @@ public class CourierTrackingService {
     public void track(CourierLocationDto courierLocationDto) {
         for (StoreInfo storeInfo : storeInfoService.getStoreInfoList()) {
             double distance = getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
-            if(distance <100.0){
-                log.info("{} has been entered location :{}",courierLocationDto.getCourierId(),storeInfo.getName());
+            if (distance < 100.0) {
+                log.info("{} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
             }
         }
 
@@ -61,7 +61,8 @@ public class CourierTrackingService {
     }
 
     public double getDistanceOfTwoPoints(float lat1, float lng1, float lat2, float ln2) {
-        return 0;
+        double distResult = org.apache.lucene.util.SloppyMath.haversinMeters(lat1, lng1, lat2, ln2);
+        return distResult;
     }
 
 

@@ -6,6 +6,7 @@ import com.migros.couriertracking.model.data.CourierLocationDto;
 import com.migros.couriertracking.service.CourierTrackingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,14 @@ public class CourierTrackingController {
     public List<CourierLocationDto> getTracks() throws Exception {
         return courierLocationMapper.courierLocationMapDtos(courierTrackingService.getTracks());
 
+    }
+
+    @ApiOperation(value = "Get id an courier")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tracks/{courierId}")
+    @ApiResponse(code = 200,message = "Get Tracks Recorded by Courier ID")
+    public Double getDistanceByCourierId(@ApiParam(value = "Event Id from which employee object will find by from database table", required = true) @PathVariable Long courierId){
+        return courierTrackingService.getTotalTravelDistance(courierId);
     }
 
 }
