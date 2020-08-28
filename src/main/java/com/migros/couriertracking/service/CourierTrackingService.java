@@ -1,6 +1,7 @@
 package com.migros.couriertracking.service;
 
 
+import com.migros.couriertracking.cache.CourierLocationCache;
 import com.migros.couriertracking.mapper.CourierLocationMapper;
 import com.migros.couriertracking.model.CourierLocation;
 import com.migros.couriertracking.model.data.CourierLocationDto;
@@ -26,13 +27,20 @@ public class CourierTrackingService {
     @Autowired
     private StoreInfoService storeInfoService;
 
+    @Autowired
+    private CourierLocationCache courierLocationCache;
+
     public void track(CourierLocationDto courierLocationDto) {
-        for (StoreInfo storeInfo : storeInfoService.getStoreInfoList()) {
-            double distance = getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
-            if (distance < 100.0) {
-                log.info("{} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
+        if (!courierLocationCache.isExist(courierLocationDto.getCourierId())) {
+            for (StoreInfo storeInfo : storeInfoService.getStoreInfoList()) {
+                double distance = getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
+                if (distance < 100.0) {
+                    courierLocationCache.put(courierLocationDto.getCourierId(), storeInfo.getName());
+                    log.info("{} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
+                }
             }
         }
+
 
         CourierLocation courierLocation = courierLocationMapper.map(courierLocationDto);
         courierTrackingRepository.save(courierLocation);
@@ -61,8 +69,8 @@ public class CourierTrackingService {
     }
 
     public double getDistanceOfTwoPoints(float lat1, float lng1, float lat2, float ln2) {
-        double distResult = org.apache.lucene.util.SloppyMath.haversinMeters(lat1, lng1, lat2, ln2);
-        return distResult;
+        return  org.apache.lucene.util.SloppyMath.haversinMeters(lat1, lng1, lat2, ln2);
+
     }
 
 
