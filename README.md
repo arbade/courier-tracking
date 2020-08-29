@@ -13,17 +13,36 @@ Courier Tracking REST API for Case Study Migros.
 For building and running the application you need:
 
 - [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [Maven 3](https://maven.apache.org)
+- [Maven 3.X.X](https://maven.apache.org)
+
+##Setup
+
+- Apache Lombok for IntelliJ IDEA
 
 ## Running the application locally
 
-There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `de.codecentric.springbootsample.Application` class from your IDE.
+There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.migros.couriertracking.CourierTrackingApplication` class from your IDE.
 
 Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
 
 ```shell
 mvn spring-boot:run
 ```
+After than you will be able to see that started message
+
+```
+2020-08-29 17:58:25.971  INFO 3798 --- [  restartedMain] c.m.c.CourierTrackingApplication         : Started CourierTrackingApplication in 2.772 seconds (JVM running for 3.471)
+
+```
+
+##RESTful API Methods
+| METHOD | PATH                       | DESCRIPTION              |   |   |
+|--------|----------------------------|--------------------------|---|---|
+| GET    | /api/v1/tracks             | All Recorded Tracks      |   |   |
+| GET    | /api/v1/tracks/{courierId} | Get id an courier        |   |   |
+| POST   | /api/v1/receiveLocation    | Receive Courier Location |   |   |
+
+
 
 ## Deploying the application to OpenShift
 
