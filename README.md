@@ -6,6 +6,7 @@
 
 Minimal [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
 
+## Description 
 Courier Tracking REST API for Case Study Migros.
 
 ## Requirements
@@ -15,13 +16,43 @@ For building and running the application you need:
 - [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Maven 3.X.X](https://maven.apache.org)
 
-##Setup
+## Setup
 
+- Clone and open in Intellij Idea IDE
 - Apache Lombok for IntelliJ IDEA
-
+- Change database connection config in `src/main/resources/application.properties`(Optional)
+- Install maven dependencies using IDE auto import or using the command ``mvn clean install``
+- Run the app using ``mvn spring-boot:run``
+- Browse the Swagger UI ``http://localhost:8080/swagger-ui.html``
+- - Browse the H2 Database ``http://localhost:8080/h2``
+  - Check the application.properties for h2 database config ``src/main/resource/application.properties``
+  - To view your H2 in-memory database 
+  - - The profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8090/h2 Default username is 'sa' with a blank password. Make sure you disable this in your production profiles.The Url Path is ``spring.datasource.url=jdbc:h2:mem:testdb``
+                                                                                                                                                                                                                                  in addition to, The Driver Class Name is ``spring.datasource.driverClassName=org.h2.Driver``
+                                                                                                                                                                                                                                  
 ## Running the application locally
 
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `com.migros.couriertracking.CourierTrackingApplication` class from your IDE.
+
+First of all, you need to using the downloads plugin and you can use Maven Commands like so:
+
+```
+mvn clean install 
+```
+
+After than, you will be able to see success message on your console like so:
+
+```
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ courier-tracking ---
+[INFO] Installing /Users/arbade/Desktop/courier-tracking/target/courier-tracking-0.0.1-SNAPSHOT.jar to /Users/arbade/.m2/repository/com/migros/courier-tracking/0.0.1-SNAPSHOT/courier-tracking-0.0.1-SNAPSHOT.jar
+[INFO] Installing /Users/arbade/Desktop/courier-tracking/pom.xml to /Users/arbade/.m2/repository/com/migros/courier-tracking/0.0.1-SNAPSHOT/courier-tracking-0.0.1-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  21.145 s
+[INFO] Finished at: 2020-08-30T14:19:22+03:00
+[INFO] ------------------------------------------------------------------------
+```
 
 Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
 
@@ -46,28 +77,6 @@ After than you will be able to see that started message
 | POST   | /api/v1/receiveLocation    | Receive Courier Location |
 
 
-
-## Deploying the application to OpenShift
-
-The easiest way to deploy the sample application to OpenShift is to use the [OpenShift CLI](https://docs.openshift.org/latest/cli_reference/index.html):
-
-```shell
-oc new-app codecentric/springboot-maven3-centos~https://github.com/codecentric/springboot-sample-app
-```
-
-This will create:
-
-* An ImageStream called "springboot-maven3-centos"
-* An ImageStream called "springboot-sample-app"
-* A BuildConfig called "springboot-sample-app"
-* DeploymentConfig called "springboot-sample-app"
-* Service called "springboot-sample-app"
-
-If you want to access the app from outside your OpenShift installation, you have to expose the springboot-sample-app service:
-
-```shell
-oc expose springboot-sample-app --hostname=www.example.com
-```
 
 ## Copyright
 
