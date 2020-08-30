@@ -14,7 +14,7 @@ Courier Tracking REST API for Case Study Migros.
 For building and running the application you need:
 
 - [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [Maven 3.X.X](https://maven.apache.org)
+- [Maven 3.X.X](https://maven.apache.org) (PS: If you do not have maven in your local.Spring is already initilazed to Maven Wrapper)
 
 ## Setup
 
@@ -122,6 +122,7 @@ GET /api/v1/tracks/{courierId}
 ```
 POST /api/v1/receiveLocation 
 ```
+
 
 ## Copyright
 
