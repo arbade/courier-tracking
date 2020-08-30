@@ -27,7 +27,7 @@ For building and running the application you need:
 - - Browse the H2 Database ``http://localhost:8080/h2``
   - Check the application.properties for h2 database config ``src/main/resource/application.properties``
   - To view your H2 in-memory database 
-  - - The profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8090/h2 Default username is 'sa' with a blank password. Make sure you disable this in your production profiles.The Url Path is ``spring.datasource.url=jdbc:h2:mem:testdb``
+  - - The profile runs on H2 in-memory database. To view and query the database you can browse to http://localhost:8080/h2 Default username is 'sa' with a blank password. Make sure you disable this in your production profiles.The Url Path is ``spring.datasource.url=jdbc:h2:mem:testdb``
                                                                                                                                                                                                                                   in addition to, The Driver Class Name is ``spring.datasource.driverClassName=org.h2.Driver``
                                                                                                                                                                                                                                   
 ## Running the application locally
