@@ -7,6 +7,7 @@ import com.migros.couriertracking.model.CourierLocation;
 import com.migros.couriertracking.model.data.CourierLocationDto;
 import com.migros.couriertracking.model.data.StoreInfo;
 import com.migros.couriertracking.repository.CourierTrackingRepository;
+import com.migros.couriertracking.util.DistanceCalculationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,8 @@ public class CourierTrackingService {
     public void track(CourierLocationDto courierLocationDto) {
         if (!courierLocationCache.isExist(courierLocationDto.getCourierId())) {
             for (StoreInfo storeInfo : storeInfoService.getStoreInfoList()) {
-                double distance = getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
+//                double distance = getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
+                double distance = DistanceCalculationUtil.getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
                 if (distance < 100.0) {
                     courierLocationCache.put(courierLocationDto.getCourierId(), storeInfo.getName());
                     log.info("{} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
@@ -62,14 +64,15 @@ public class CourierTrackingService {
                 previousLocation = courierLocation;
                 continue;
             }
-            totalDistance += getDistanceOfTwoPoints(previousLocation.getLat(), previousLocation.getLng(), courierLocation.getLat(), courierLocation.getLng());
+//            totalDistance += getDistanceOfTwoPoints(previousLocation.getLat(), previousLocation.getLng(), courierLocation.getLat(), courierLocation.getLng());
+            totalDistance += DistanceCalculationUtil.getDistanceOfTwoPoints(previousLocation.getLat(), previousLocation.getLng(), courierLocation.getLat(), courierLocation.getLng());
             previousLocation = courierLocation;
         }
         return totalDistance;
     }
 
     public double getDistanceOfTwoPoints(float lat1, float lng1, float lat2, float ln2) {
-        return  org.apache.lucene.util.SloppyMath.haversinMeters(lat1, lng1, lat2, ln2);
+        return org.apache.lucene.util.SloppyMath.haversinMeters(lat1, lng1, lat2, ln2);
 
     }
 

@@ -54,8 +54,8 @@ public class CourierTrackingController {
     @ApiOperation(value = "Get id an courier")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tracks/{courierId}")
-    @ApiResponse(code = 200,message = "Get Tracks Recorded by Courier ID")
-    public Double getDistanceByCourierId(@ApiParam(value = "Return querying total distances by courierId", required = true) @PathVariable Long courierId){
+    @ApiResponse(code = 200, message = "Get Tracks Recorded by Courier ID")
+    public Double getDistanceByCourierId(@ApiParam(value = "Return querying total distances by courierId", required = true, example = "1") @PathVariable Long courierId) {
         return courierTrackingService.getTotalTravelDistance(courierId);
     }
 
