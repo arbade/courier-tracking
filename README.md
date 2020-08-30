@@ -73,10 +73,55 @@ After than you will be able to see that started message
 | METHOD | PATH                       | DESCRIPTION              |
 |--------|----------------------------|--------------------------|
 | GET    | /api/v1/tracks             | All Recorded Tracks      |
-| GET    | /api/v1/tracks/{courierId} | Get id an courier        |
+| GET    | /api/v1/tracks/{courierId} | Get id an courier for querying total distances |
 | POST   | /api/v1/receiveLocation    | Receive Courier Location |
 
+###Api Docs & Sample 
 
+- List of All Recorded Tracks 
+```
+GET /api/v1/tracks
+```
+- Content type ``json`` for ``http://localhost:8080/api/v1/tracks`` samples like so :
+````
+[
+  {
+    "id": 1,
+    "courierId": 1,
+    "timestamp": "2020-08-30T12:09:27.752",
+    "lat": 22.34543,
+    "lng": 49.22213
+  },
+  {
+    "id": 2,
+    "courierId": 1,
+    "timestamp": "2020-08-30T12:10:43.214",
+    "lat": 32.22212,
+    "lng": 48.22109
+  },
+  {
+    "id": 3,
+    "courierId": 2,
+    "timestamp": "2020-08-30T12:11:11.479",
+    "lat": 25.22112,
+    "lng": 47.00232
+  }
+]
+````
+- Also you will be able to see log message for courier
+```
+ INFO 5343 --- [nio-8080-exec-5] c.m.c.c.CourierTrackingController        : Receive Tracking:CourierLocationDto(id=0, courierId=2, timestamp=2020-08-30T12:13:09.527, lat=27.2212, lng=33.1233)
+```
+
+- Return querying total distances by courier id
+```
+GET /api/v1/tracks/{courierId}
+```
+
+- Create a receive location for courier info
+```
+POST /api/v1/receiveLocation 
+```
 
 ## Copyright
 
