@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.List;
 
-@SpringBootTest
+
 public class CourierTrackingServiceTest {
 
     @InjectMocks
@@ -43,36 +43,11 @@ public class CourierTrackingServiceTest {
 
     @Test
     public void createTrackTest() {
-//        CourierLocationDto courierLocationDto = new CourierLocationDto();
-//        when(!courierLocationCache.isExist(courierLocationDto.getCourierId())).thenReturn(true);
-//        Iterator<StoreInfo> iterator = mock(Iterator.class);
-//        List<StoreInfo> infoList = mock(List.class);
-//        StoreInfo storeInfo = mock(StoreInfo.class);
-//        when(infoList.iterator()).thenReturn(iterator);
-////        OngoingStubbing<Double> distance = when(courierTrackingService.getDistanceOfTwoPoints(1f, 1f, 1f, 1f)).thenReturn();
-////        assertEquals(0f, distance);
-//        CourierLocation courierLocation = new CourierLocation();
-//        courierLocation.setCourierId(1L);
-//        courierLocation.setLat(0f);
-//        courierLocation.setLng(0f);
-//        courierLocation.setTimestamp(courierLocation.getTimestamp());
-//        courierLocation.setId(1L);
-//        courierLocation = courierLocationMapper.map(courierLocationDto);
-////        CourierLocation courierLocation = courierLocationMapper.map(courierLocationDto);
-//        when(courierTrackingRepository.save(courierLocation)).thenAnswer(new Answer<CourierLocation>() {
-//            @Override
-//            public CourierLocation answer(InvocationOnMock invocationOnMock) throws Throwable {
-//                return null;
-//            }
-//        });
-//        courierTrackingRepository.save(courierLocation);
-////        assertNotNull(courierLocation.getCourierId());
-//        assertEquals(1L, courierLocation.getCourierId());
-//        assertEquals(1L, courierLocation.getId());
-//        assertEquals(0f, courierLocation.getLat());
-//        assertEquals(0f, courierLocation.getLng());
+        //given
 
+        //when
 
+        //then
     }
 
     @Test
