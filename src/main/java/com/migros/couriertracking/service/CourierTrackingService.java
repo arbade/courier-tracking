@@ -37,7 +37,7 @@ public class CourierTrackingService {
                 double distance = DistanceCalculationUtil.getDistanceOfTwoPoints(storeInfo.getLat(), storeInfo.getLng(), courierLocationDto.getLat(), courierLocationDto.getLng());
                 if (distance < 100.0) {
                     courierLocationCache.put(courierLocationDto.getCourierId(), storeInfo.getName());
-                    log.info("{} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
+                    log.info("Courier {} has been entered location :{}", courierLocationDto.getCourierId(), storeInfo.getName());
                 }
             }
         }
