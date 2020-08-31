@@ -9,29 +9,32 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.*;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 
-@SpringBootTest
 public class CourierTrackingControllerTest {
 
     @Mock
+    private CourierLocationMapper courierLocationMapper;
+    @Mock
     private CourierTrackingService courierTrackingService;
-
     @InjectMocks
     private CourierTrackingController courierTrackingController;
+
+    @Mock
+    private CourierLocation courierLocationMock;
+
+    @Mock
+    private CourierLocationDto courierLocationDtoMock;
 
     @Before
     public void init() {
@@ -39,48 +42,69 @@ public class CourierTrackingControllerTest {
     }
 
     @Test
-    public void receiveLocationTest() {
+    public void create_ShouldCreateNew_WhenParamsAreValid() {
+        //given
         CourierLocationDto courierLocationDto = new CourierLocationDto();
         courierLocationDto.setId(1L);
         courierLocationDto.setCourierId(1L);
         courierLocationDto.setLat(0f);
         courierLocationDto.setLng(0f);
         courierLocationDto.setTimestamp(LocalDateTime.now());
-        ResponseEntity<CourierLocationDto> courierLocationDtoResponseEntity = courierTrackingController.receiveLocation(courierLocationDto);
-        verify(courierTrackingService, times(1)).track(courierLocationDto);
+        //when
+        Mockito.when(courierTrackingService.create(courierLocationDto)).thenReturn(courierLocationMock);
+        Mockito.when(courierLocationMapper.mapToDto(courierLocationMock)).thenReturn(courierLocationDtoMock);
+
+        ResponseEntity<CourierLocationDto> responseEntity = courierTrackingController.create(courierLocationDto);
+
+        //then
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertTrue(responseEntity.hasBody());
+
+        verify(courierTrackingService, times(1)).create(courierLocationDto);
+        verify(courierLocationMapper, times(1)).mapToDto(courierLocationMock);
+        verifyNoMoreInteractions(courierTrackingService, courierLocationMapper);
     }
+
 
     @Test
-    public void getTracksListTest() throws Exception {
-        CourierLocationDto courierLocationDto = new CourierLocationDto();
-        courierLocationDto.setId(1L);
-        courierLocationDto.setCourierId(1L);
-        courierLocationDto.setLat(0f);
-        courierLocationDto.setLng(0f);
-        List<CourierLocationDto> courierLocationDtos = new ArrayList<>();
-        courierLocationDtos.add(courierLocationDto);
-//        when(courierTrackingService.getTracks()).thenReturn(courierLocationMapper.map(courierLocationDtos));
-//        List<CourierLocationDto> locationDtos = courierTrackingController.getTracks();
-//        assertFalse(locationDtos.isEmpty());
-//        verify(courierTrackingService, times(1)).getTracks();
-        verifyNoInteractions(courierTrackingService);
+    public void getCourierLocations_ShouldReturnList_WhenLocationsDoExists() {
+        //given
+        //when
+        Mockito.when(courierTrackingService.getCourierLocations()).thenReturn(Collections.singletonList(courierLocationMock));
+        Mockito.when(courierLocationMapper.courierLocationMapDtos(Collections.singletonList(courierLocationMock)))
+                .thenReturn(Collections.singletonList(courierLocationDtoMock));
 
+        List<CourierLocationDto> courierLocations = courierTrackingController.getCourierLocations();
+
+        //then
+        assertNotNull(courierLocations);
+        assertFalse(courierLocations.isEmpty());
+
+        verify(courierTrackingService, times(1)).getCourierLocations();
+        verify(courierLocationMapper, times(1))
+                .courierLocationMapDtos(Collections.singletonList(courierLocationMock));
+        verifyNoMoreInteractions(courierTrackingService, courierLocationMapper);
     }
+
 
     @Test
-    public void getDistanceByCourierId() {
-        CourierLocationDto courierLocationDto = new CourierLocationDto();
-        courierLocationDto.setId(1L);
-        courierLocationDto.setCourierId(1L);
-        courierLocationDto.setLat(0f);
-        courierLocationDto.setLng(0f);
+    public void getTotalTravelDistance_ShouldReturnTotalTravelDistance_WhenCourierLocationsDoExists() {
+        //given
+        Long courierId = 5L;
+        //when
+        Double distance = 230.00;
+        Mockito.when(courierTrackingService.getTotalTravelDistance(courierId)).thenReturn(distance);
 
-        Double dto = courierTrackingController.getDistanceByCourierId(1L);
-        Mockito.when(courierTrackingService.getTotalTravelDistance(1L)).thenReturn(dto);
-        assertEquals(Optional.of(1L), Optional.of(courierLocationDto.getCourierId()));
-        verify(courierTrackingService, times(1)).getTotalTravelDistance(1L);
-//        verifyNoInteractions(courierTrackingService);
+        Double totalTravelDistance = courierTrackingController.getTotalTravelDistance(courierId);
 
+        //then
+        assertNotNull(totalTravelDistance);
+        assertEquals(distance, totalTravelDistance);
+
+
+        verify(courierTrackingService, times(1)).getTotalTravelDistance(courierId);
+        verifyNoMoreInteractions(courierTrackingService, courierLocationMapper);
     }
+
 
 }

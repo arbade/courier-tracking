@@ -13,7 +13,7 @@ Courier Tracking REST API for Case Study Migros.
 
 For building and running the application you need:
 
-- [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 - [Maven 3.X.X](https://maven.apache.org) (PS: If you do not have maven in your local.Spring is already initilazed to Maven Wrapper)
 
 ## Setup
@@ -72,9 +72,9 @@ After than you will be able to see that started message
 
 | METHOD | PATH                       | DESCRIPTION              |
 |--------|----------------------------|--------------------------|
-| GET    | /api/v1/tracks             | All Recorded Tracks      |
-| GET    | /api/v1/tracks/{courierId} | Get id an courier for querying total distances |
-| POST   | /api/v1/receiveLocation    | Receive Courier Location |
+| GET    | /api/v1/courier-locations  | Get All Courier Locations|
+| GET    | /api/v1/courier-locations/total-distance/{courierId} | Get total distance of courier|
+| POST   | /api/v1/courier-locations  | Create new Courier Location |
 
 ### Api Docs & Sample 
 

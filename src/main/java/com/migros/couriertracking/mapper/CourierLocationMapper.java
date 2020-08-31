@@ -13,7 +13,10 @@ public interface CourierLocationMapper {
 
     CourierLocation map(CourierLocationDto courierLocationDto);
 
+    CourierLocationDto mapToDto(CourierLocation courierLocation);
+
     List<CourierLocation> map(List<CourierLocationDto> courierLocationDtoList);
 
     List<CourierLocationDto> courierLocationMapDtos(Collection<CourierLocation> courierLocations);
+
 }

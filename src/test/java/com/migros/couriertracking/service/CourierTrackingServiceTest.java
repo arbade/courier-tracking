@@ -79,7 +79,7 @@ public class CourierTrackingServiceTest {
     public void getTracksTest() throws Exception {
         List<CourierLocation> courierLocations = Arrays.asList(new CourierLocation(1L, 1L, LocalDateTime.now(), 0f, 0f), new CourierLocation(2L, 2L, LocalDateTime.now(), 0f, 0f));
         when(courierTrackingRepository.findAll()).thenReturn(courierLocations);
-        List<CourierLocation> locationListResult = courierTrackingService.getTracks();
+        List<CourierLocation> locationListResult = courierTrackingService.getCourierLocations();
         System.out.println(locationListResult);
         verify(courierTrackingRepository, times(1)).findAll();
     }

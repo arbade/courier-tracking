@@ -24,10 +24,12 @@ public class StoreInfoService {
 
     @PostConstruct
     public void init() throws IOException {
+
         File file = ResourceUtils.getFile("classpath:stores.json");
         String storeJsonContent = String.join("", Files.readAllLines(file.toPath()));
         storeInfoList = JsonUtil.getStoreInfoList(storeJsonContent);
         System.out.println(storeInfoList);
     }
+
 
 }
