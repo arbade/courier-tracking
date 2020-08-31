@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,11 +24,13 @@ public class StoreInfoService {
 
     @PostConstruct
     public void init() throws IOException {
-
-        File file = ResourceUtils.getFile("classpath:stores.json");
-        String storeJsonContent = String.join("", Files.readAllLines(file.toPath()));
-        storeInfoList = JsonUtil.getStoreInfoList(storeJsonContent);
-        System.out.println(storeInfoList);
+        try (InputStream inputStream = getClass().getResourceAsStream("/stores.json");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String contents = reader.lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
+            storeInfoList = JsonUtil.getStoreInfoList(contents);
+            System.out.println(storeInfoList);
+        }
     }
 
 

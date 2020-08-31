@@ -1,20 +1,19 @@
 # courier-tracking
 
-[![Build Status](https://travis-ci.org/codecentric/springboot-sample-app.svg?branch=master)](https://travis-ci.org/codecentric/springboot-sample-app)
-[![Coverage Status](https://coveralls.io/repos/github/codecentric/springboot-sample-app/badge.svg?branch=master)](https://coveralls.io/github/codecentric/springboot-sample-app?branch=master)
+
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 Minimal [Spring Boot](http://projects.spring.io/spring-boot/) sample app.
 
 ## Description 
-Courier Tracking REST API for Case Study Migros.
+Courier Tracking RESTful  API
 
 ## Requirements
 
 For building and running the application you need:
 
 - [JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-- [Maven 3.X.X](https://maven.apache.org) (PS: If you do not have maven in your local.Spring is already initilazed to Maven Wrapper)
+- [Maven 3.X.X](https://maven.apache.org) (PS: If you do not have maven in your local.Spring is already initilazed to Maven Wrapper(spring.io))
 
 ## Setup
 
@@ -22,7 +21,8 @@ For building and running the application you need:
 - Apache Lombok for IntelliJ IDEA
 - Change database connection config in `src/main/resources/application.properties`(Optional)
 - Install maven dependencies using IDE auto import or using the command ``mvn clean install``
-- Run the app using ``mvn spring-boot:run``
+- Run the app using for Spring Side ``mvn spring-boot:run`` or on Terminal for Jar files ``java -jar target/courier-tracking-0.0.1-SNAPSHOT.jar
+``
 - Browse the Swagger UI ``http://localhost:8080/swagger-ui.html``
 - - Browse the H2 Database ``http://localhost:8080/h2``
   - Check the application.properties for h2 database config ``src/main/resource/application.properties``
@@ -78,11 +78,11 @@ After than you will be able to see that started message
 
 ### Api Docs & Sample 
 
-- List of All Recorded Tracks 
+- Get All Courier Locations
 ```
 GET /api/v1/tracks
 ```
-- Content type ``json`` for ``http://localhost:8080/api/v1/tracks`` samples like so :
+- Content type ``json`` for ``http://localhost:8080/api/v1/courier-locations`` samples like so :
 ````
 [
   {
@@ -108,22 +108,18 @@ GET /api/v1/tracks
   }
 ]
 ````
-- Also you will be able to see log message for courier
+- Also you will be able to see log message for courier like so:
 ```
- INFO 5343 --- [nio-8080-exec-5] c.m.c.c.CourierTrackingController        : Receive Tracking:CourierLocationDto(id=0, courierId=2, timestamp=2020-08-30T12:13:09.527, lat=27.2212, lng=33.1233)
-```
-
-- Return querying total distances by courier id
-```
-GET /api/v1/tracks/{courierId}
+c.m.c.c.CourierTrackingController        : Create CourierLocation request is started. CourierLocationDto: CourierLocationDto(id=0, courierId=1, timestamp=2020-08-31T20:55:09.609, lat=40.992332, lng=29.124422)
 ```
 
-- Create a receive location for courier info
+- Get total distance of courier
 ```
-POST /api/v1/receiveLocation 
+GET /api/v1/courier-locations/total-distance/{courierId}
 ```
 
+- Create new  Courier Location
+```
+POST /api/v1/courier-locations
+```
 
-## Copyright
-
-Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
